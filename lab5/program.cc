@@ -2,8 +2,6 @@
 #include <iostream> 
 #include <ctime> // for time()
 #include <cstdlib> // for rand() & srand()
-#include <thread> //find an explain
-#include <chrono>// find an explain
 #include <vector>
 #include <algorithm> // std::sort
 #include <unordered_map> // hash-table
@@ -297,62 +295,51 @@ int main()
         switch (choice)
         {
         case 0: 
-            std::cout << "leaving.." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
+            std::cout << "leaving." << std::endl;
             break;
             
         case 14:
             std::cout << "You chose #14." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
             std::cout << "Need to change positive numbers to their squares in array, after find two maximums." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
             ToSquaresWithTwoMax();
             break;
         
         case 15:
             std::cout << "You chose #15." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
             taskOne();
             break;
         
         case 16:
             std::cout << "You chose #16." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));   
             taskTwo();
             break;
         case 17:
             std::cout << "You chose #17." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
             taskThree();
             break;
         
         case 18:
             std::cout << "You chose #18." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
             taskFour();
             break;
         
         case 19:
             std::cout << "You chose #19." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));
             taskFive();
             break;
 
         case 20:
             std::cout << "You chose #20." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700)); 
             taskSix(); 
             break;
 
         case 21:
             std::cout << "You chose #21." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(700));  
             taskSeven();
             break;
                 
         default:
             std::cerr << "incorrect input. Try again." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
             
         }
     } while (choice != 0);
