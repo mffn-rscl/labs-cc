@@ -293,7 +293,7 @@ int main()
             break;
     
     
-        case 2:    
+        case 2:  
             std::cout << "Виконую блок 2" << std::endl;
             doBlockTwo();
             break;
