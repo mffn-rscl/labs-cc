@@ -96,6 +96,7 @@ void plurals()
 
     std::sort(begin(A), end(A));
     std::sort(begin(B), end(B));
+    
 
     if (str == "UNION") 
     {

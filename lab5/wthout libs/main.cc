@@ -8,7 +8,12 @@
 
 void findTheMaxValFromArray(int size,int *array) // initializing func for two max numbers from array without using lib <climits>
 {
+    if(size < 2)
+    {
+        exit(0);
+    }
     int max1 = array[0], max2 = array[1], temp;
+    
     if (max1 < max2) {swap(&max1, &max2); }
     
     for (int i = 2; i < size; i++)
