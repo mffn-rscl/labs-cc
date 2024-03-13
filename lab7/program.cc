@@ -1,19 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <climits>
+#include "methods.hpp"
 
-void input(int **arr, int cols, int rows)
-{
-    for (int i = 0; i < cols; ++i) {
-        for (int j = 0; j < rows; ++j) 
-            std::cin >> arr[i][j];
-    }
-}
 
 void multiples_of_five()
 {
     int cols, rows, count_of_elements = 0,max_value = -32768;    
     std::cout << " enter the length of cols & rows:";
-    std::cin >> cols >> rows;
+    std::cin >> rows >> cols;
     std::vector<int> arr;
     int temp;
     for (int i = 0; i < cols*rows; i++)
@@ -27,9 +22,9 @@ void multiples_of_five()
             count_of_elements++;
         }
         
-        if ((i+1) % rows == 0)
+        if ((i+1) % cols == 0)
         {
-            std::cout << "elements multiples of five in row "<<  (i+1) / rows << " is: " << count_of_elements << std::endl;
+            std::cout << "elements multiples of five in row "<<  (i+1) / cols << " is: " << count_of_elements << std::endl;
             count_of_elements = 0;            
         }
     }
@@ -38,28 +33,107 @@ void multiples_of_five()
  
 void max_and_min_of_each_row() 
 {
-    int cols, rows;
+    int cols, rows, min_int = INT_MAX, max_int = INT_MIN, max_index, min_index;
     std::cout << " enter the length of cols & rows:";
-    std::cin >> cols >> rows;
-    int arr[cols][rows];
+    std::cin >> rows >> cols;
+    int** arr = new int*[rows];
+    for (int i = 0; i < rows; i++)arr[i] = new int[rows];
 
-    for (int i = 0; i < ; i++)
-    {
-        /* code */
-    }
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) 
+        {
+            std::cin >> arr[i][j];
+            if (max_int < arr[i][j])
+            {
+                max_int = arr[i][j];
+                max_index = j;
+            }
+
+            if (min_int > arr[i][j])
+            {
+                min_int = arr[i][j];
+                min_index = j;
+            }
+        }
+        
+        if(arr[i][cols-1] == max_int && arr[i][0] == min_int)
+        {
+            swap(&arr[i][cols-1], &arr[i][0]);
+        }
+        else
+        {
+            swap(&arr[i][0], &arr[i][max_index]);
+            swap(&arr[i][cols-1], &arr[i][min_index]);
+
+        }
+        min_int = INT_MAX, max_int = INT_MIN;
+    }     
     
 
+    std::cout << " swapped array: " << std::endl;
+
+    output(arr,rows,cols);
+
+
+    for (int i = 0; i < rows; ++i) delete[] arr[i]; //stack cleaning
+    delete[] arr;
 }
 
-void sorted_rows()
+void sorted_cols()
 {
+    int cols, rows;
+    std::cout << " enter the length of cols & rows:";
+    std::cin >> rows >> cols;
+    int** arr = new int*[rows];
+    for (int i = 0; i < rows; i++)arr[i] = new int[rows];
 
+
+    std::cout << "Enter the elements of matrix: " << std::endl;
+
+    input(arr,rows, cols);
+
+    for (int i = 0; i < cols; i++) 
+    {((i+1) % 2 != 0) ? modified_bouble_sort(arr, rows, i) : reversed_selection_sort(arr,rows,i);}
+    
+
+    std::cout << "\nResult: " << std::endl;
+    output(arr,rows,cols);
+
+    for (int i = 0; i < rows; ++i) delete[] arr[i]; //stack cleaning
+    delete[] arr;
 }
 
 void sort_by_product_of_nums()
 {
+    int cols, rows, product = 1;
+    std::cout << " enter the length of cols & rows:";
+    std::cin >> rows >> cols;
+    int solution[cols];
+    int** arr = new int*[rows];
+    for (int i = 0; i < rows; i++)arr[i] = new int[rows];
 
+
+    std::cout << "Enter the elements of matrix: " << std::endl;
+
+    input(arr,rows, cols);
+    
+    for (int i = 0; i < cols; i++)
+    {
+        for (int j = 0; j < rows; j++) product = product*arr[j][i];
+        std::cout << "Product of " << i + 1 << " column is " << product << std::endl;
+        solution[i] = product;
+        product = 1;
+    }
+    selection_sort(solution, cols);             
+
+    std::cout << "Sorted array of product of numbers: ";
+    for (int i = 0; i < cols; i++) std::cout << solution[i] << " ";
+     
+    for (int i = 0; i < rows; ++i) delete[] arr[i];
+    delete[] arr;
 }
+
+    // 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\
 
 int main()
 {
@@ -81,7 +155,7 @@ int main()
     
     case 3:
         std::cout << " you chose #3:\nУпорядкувати всі стовпчики з парними номерами за незростанням, а всі стовпчики з непарними номерами за неспаданням.\n" << std::endl;
-        sorted_rows();
+        sorted_cols();
         break;
     case 4: 
         std::cout << "you chose #4:\nУпорядкувати стовпчики матриці за незростанням добутків елементів у цих стовпчиках.\n" << std::endl;

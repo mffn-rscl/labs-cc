@@ -1,31 +1,36 @@
 #include <iostream>
 #include <cmath>
+#include <chrono>
+#include "methods.hpp"
+class Timer
+{
+private:
+    using clock_t = std::chrono::high_resolution_clock;
+    using second_t = std::chrono::duration<double, std::ratio<1>>;
 
-void input(auto *arr, int size)
+
+    std::chrono::time_point<clock_t> m_beg;
+
+public:
+    Timer() : m_beg(clock_t::now()) {}
+
+    void reset()
+    {
+        m_beg = clock_t::now();
+    }
+
+    double elapsed() const
+    {
+        return std::chrono::duration_cast<second_t>(clock_t::now() - m_beg).count();
+    }
+};
+
+void input(double *arr, int size)
 {
     for (int i = 0; i < size; i++)std::cin >> arr[i];
 }
 
-void swap(int *a, int *b) 
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
 
-void shell_sort(auto data[], int size) 
-{   
-    for (int interval = size / 2; interval > 0; interval /= 2) {
-        for (int i = interval; i < size; i += 1) {
-            int temp = data[i];
-            int j;
-            for (j = i; j >= interval && data[j - interval] > temp; j -= interval) {
-                data[j] = data[j - interval];
-            }
-            data[j] = temp;
-        }
-    }
-}
 
 void extra_task_one()
 {
@@ -34,7 +39,7 @@ void extra_task_one()
     
     std::cout << "enter the length of two arrays:";
     std::cin >> size;
-    int holes[size], bridges[size];
+    double holes[size], bridges[size];
     std::cout << "input the holes: ";
     input(holes, size);
     std::cout << " input the bridges: ";
@@ -79,34 +84,32 @@ void extra_task_two()
 }
 
 
-void extra_task_three() 
+void task_20_modified()
 {
-    int n;
-    std::cout << "Enter the number of segments: ";
-    std::cin >> n;
-    std::cout << "Enter the segments: ";
-    double arr[n];
-    input(arr,n);
-
+    Timer t;
+    static const int n = 6;
+    int arr[n] {10000, 40, 200, 100, 250, 70};
     shell_sort(arr,n);
 
 
+
+}
+
+void extra_task_three() 
+{
+    Timer t;
+    static const int n = 6;
+    int arr[n] {10000, 40, 200, 100, 250, 70};
+    shell_sort(arr,n);
+
     int counter = 0;
-    for (int i = n - 1; i >= 2 ; i--)
-    {
-      for (int j = i-1; j >= 1 ; j--)
-      {
-        for (int k = j-1; k >= 0 ; k--)
-        {
-          if (arr[i]-arr[j]-arr[k] < 0) {
-            counter++;
-          }
-        }
-      }   
-    }
-    std::cout << "\nnum of non-degenerate triangles is " << counter << std::endl;
+    
+    
 
     
+    std::cout << "\nnum of non-degenerate triangles is " << counter << std::endl;
+
+    std::cout << "Time elapsed: " << t.elapsed() << " sec."<<  std::endl;
     
 
 }
@@ -116,7 +119,7 @@ void solution()
     int size;
     std::cout <<"Enter the count of shops:";
     std::cin >> size;
-    int arr[size];
+    double arr[size];
     std::cout << "Enter the price of each stuffs:" << std::endl;
     input(arr,size);
 
@@ -125,7 +128,6 @@ void solution()
     for (int count = size/5; count < size; count++)sum+=arr[count];
     std::cout << sum << std::endl;
 }
-
 
 int main()
 {
