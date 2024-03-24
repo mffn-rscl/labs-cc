@@ -5,51 +5,29 @@ void swap(int *a, int *b)
     *a= *b;
     *b = temp;
 }
-void selection_sort(int *arr, int rows)
-{
-     for (int j = rows-1; j > 0; j--)
-    {
-        int smallestIndex = j;
-        for (int k = j-1; k >=0; k--)
-        {
-            if (arr[smallestIndex] > arr[k]) smallestIndex=k;
 
-        }
-        swap(&arr[smallestIndex], &arr[j]);
+void dynamic_selection_sort(int **arr, int checker, int rows) {
+    int start = 0;
+    int end = rows - 1;
+    int step = 1;
+    if ((checker + 1) % 2 != 0) {
+        start = rows - 1;
+        end = 0;
+        step = -1;
     }
-    
-}
 
-void reversed_selection_sort(int **arr, int rows, int i)
-{
-    for (int j = rows-1; j > 0; j--)
-    {
-        int smallestIndex = j;
-        for (int k = j-1; k >=0; k--)
-        {
-            if (arr[smallestIndex][i] >arr[k][i])smallestIndex = k;
-        }
-        swap(&arr[smallestIndex][i], &arr[j][i]);
-    }
-}
-
-void modified_bouble_sort(int **arr, int rows, int k)
-{
-    for (int i = 0; i < rows-1; i++)
-    {
-        bool swaped = false;
-        for (int j = 0; j < rows-i-1; j++)
-        {
-            if (arr[j][k] > arr[j + 1][k])
-            {
-                swap(&arr[j+1][k], &arr[j][k]);
-                swaped = true;
+    for (int i = start; i != end; i += step) {
+        int smallestIndex = i;
+        for (int j = i + step; j >= 0 && j < rows; j += step) {
+            if (arr[j][checker] > arr[smallestIndex][checker]) {
+                smallestIndex = j;
             }
         }
-         if (!swaped)
-            break; 
+        if (smallestIndex != i) {
+            swap(&arr[smallestIndex][checker], &arr[i][checker]);
+        }
     }
-}           
+}
 
 
 void output(int **arr, int rows, int cols)
@@ -67,4 +45,30 @@ void input(int **arr, int rows, int cols)
     {
         for (int j = 0; j < cols; j++) std::cin >> arr[i][j];
     }
+}
+
+int getMinValue(int **arr, int rows, int counter)
+{
+    int min_element = INT_MAX, index;
+        for (int j = 0; j < rows; j++) 
+            if (arr[counter][j] < min_element) 
+            {
+                min_element = arr[counter][j];
+                index = j;
+            }
+    
+    return index;
+}
+
+int getMaxValue(int **arr, int rows, int counter)
+{
+    int max_element = INT_MIN, index;
+        for (int j = 0; j < rows; j++) 
+            if (arr[counter][j] > max_element) 
+            {
+                max_element = arr[counter][j];
+                index = j;
+            }
+    
+    return index;
 }

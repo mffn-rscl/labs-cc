@@ -6,68 +6,57 @@
 
 void multiples_of_five()
 {
-    int cols, rows, count_of_elements = 0,max_value = -32768;    
+    int cols, rows; 
     std::cout << " enter the length of cols & rows:";
     std::cin >> rows >> cols;
-    std::vector<int> arr;
-    int temp;
-    for (int i = 0; i < cols*rows; i++)
-    {
-        std::cin >>temp;
-        arr.push_back(temp);
-        
-        if (arr[i] % 5 == 0 && arr[i] != 0)
-        {
-            if (max_value < arr[i])max_value = arr[i];
-            count_of_elements++;
-        }
-        
-        if ((i+1) % cols == 0)
-        {
-            std::cout << "elements multiples of five in row "<<  (i+1) / cols << " is: " << count_of_elements << std::endl;
-            count_of_elements = 0;            
-        }
-    }
-    std::cout << "The max element multiple of five is " << max_value <<"."<< std::endl;    
-}
- 
-void max_and_min_of_each_row() 
-{
-    int cols, rows, min_int = INT_MAX, max_int = INT_MIN, max_index, min_index;
-    std::cout << " enter the length of cols & rows:";
-    std::cin >> rows >> cols;
-    int** arr = new int*[rows];
+
+    int** arr = new int*[cols];
     for (int i = 0; i < rows; i++)arr[i] = new int[rows];
 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) 
-        {
-            std::cin >> arr[i][j];
-            if (max_int < arr[i][j])
-            {
-                max_int = arr[i][j];
-                max_index = j;
-            }
+    std::cout << "Enter the elements of matrix: " << std::endl;
 
-            if (min_int > arr[i][j])
+    input(arr,rows, cols);
+
+    for (int i = 0; i < cols; i++)
+    {
+        int max_value = INT_MIN,  count_of_elements = 0; 
+        for (int j = 0; j < rows; j++)
+        {
+            if (arr[i][j] % 5 == 0 && arr[i][j] != 0)
             {
-                min_int = arr[i][j];
-                min_index = j;
+                count_of_elements++;
+                if (max_value < arr[i][j]) max_value = arr[i][j];
             }
         }
+
+        std::cout << count_of_elements << " fives in row " << i+1 << std::endl;
+        std::cout << "max multiple of five in " << i+1<< " row is: " << max_value << std::endl;
+        std::cout << std::endl;                 
+    }
+    for (int i = 0; i < rows; ++i) delete[] arr[i]; 
+    delete[] arr;
+}
+ 
+void max_and_min_of_each_row()
+{
+    int cols, rows;
+    std::cout << " enter the length of cols & rows:";
+    std::cin >> rows >> cols;
+    int** arr = new int*[cols];
+    for (int i = 0; i < rows; i++)arr[i] = new int[rows];
+    std::cout << "Enter the elements of matrix: " << std::endl;
+
+    input(arr,rows, cols);
+    
+    for (int i = 0; i < rows; i++)
+    {
+        int max_index = getMaxValue(arr, cols,  i);
+        int min_index = getMinValue(arr, cols,  i);
         
-        if(arr[i][cols-1] == max_int && arr[i][0] == min_int)
-        {
-            swap(&arr[i][cols-1], &arr[i][0]);
-        }
-        else
-        {
-            swap(&arr[i][0], &arr[i][max_index]);
-            swap(&arr[i][cols-1], &arr[i][min_index]);
-
-        }
-        min_int = INT_MAX, max_int = INT_MIN;
-    }     
+        swap(&arr[i][0], &arr[i][max_index]);
+        if (min_index != 0 && min_index != cols - 1)swap(&arr[i][cols - 1], &arr[i][min_index]); 
+    }
+    
     
 
     std::cout << " swapped array: " << std::endl;
@@ -92,8 +81,7 @@ void sorted_cols()
 
     input(arr,rows, cols);
 
-    for (int i = 0; i < cols; i++) 
-    {((i+1) % 2 != 0) ? modified_bouble_sort(arr, rows, i) : reversed_selection_sort(arr,rows,i);}
+    for (int i = 0; i < cols; i++) dynamic_selection_sort(arr,i,rows);
     
 
     std::cout << "\nResult: " << std::endl;
@@ -103,31 +91,27 @@ void sorted_cols()
     delete[] arr;
 }
 
+
 void sort_by_product_of_nums()
 {
     int cols, rows, product = 1;
     std::cout << " enter the length of cols & rows:";
     std::cin >> rows >> cols;
-    int solution[cols];
     int** arr = new int*[rows];
     for (int i = 0; i < rows; i++)arr[i] = new int[rows];
 
-
     std::cout << "Enter the elements of matrix: " << std::endl;
-
-    input(arr,rows, cols);
+    input(arr,rows,cols);
     
-    for (int i = 0; i < cols; i++)
+    for (int i = 0; i < rows; i++)
     {
-        for (int j = 0; j < rows; j++) product = product*arr[j][i];
-        std::cout << "Product of " << i + 1 << " column is " << product << std::endl;
-        solution[i] = product;
-        product = 1;
+        for (int  j = 0; j < cols; j++)
+        {
+            product*=arr[j][i];
+        }
+        
     }
-    selection_sort(solution, cols);             
-
-    std::cout << "Sorted array of product of numbers: ";
-    for (int i = 0; i < cols; i++) std::cout << solution[i] << " ";
+    // soltuion
      
     for (int i = 0; i < rows; ++i) delete[] arr[i];
     delete[] arr;
