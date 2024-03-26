@@ -92,22 +92,6 @@ void sorted_cols()
 }
 
 
-void sort_by_product_of_nums()
-{
-    int cols, rows, product = 1;
-    std::cout << " enter the length of cols & rows:";
-    std::cin >> rows >> cols;
-    int** arr = new int*[rows];
-    for (int i = 0; i < rows; i++)arr[i] = new int[rows];
-
-    std::cout << "Enter the elements of matrix: " << std::endl;
-    input(arr,rows,cols);
-    
-    
-     
-    for (int i = 0; i < rows; ++i) delete[] arr[i];
-    delete[] arr;
-}
 
     // 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\ 7\
 
@@ -132,10 +116,6 @@ int main()
     case 3:
         std::cout << " you chose #3:\nУпорядкувати всі стовпчики з парними номерами за незростанням, а всі стовпчики з непарними номерами за неспаданням.\n" << std::endl;
         sorted_cols();
-        break;
-    case 4: 
-        std::cout << "you chose #4:\nУпорядкувати стовпчики матриці за незростанням добутків елементів у цих стовпчиках.\n" << std::endl;
-        sort_by_product_of_nums();    
         break;
 
     case 0:
