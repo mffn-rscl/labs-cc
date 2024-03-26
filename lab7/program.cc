@@ -103,15 +103,7 @@ void sort_by_product_of_nums()
     std::cout << "Enter the elements of matrix: " << std::endl;
     input(arr,rows,cols);
     
-    for (int i = 0; i < rows; i++)
-    {
-        for (int  j = 0; j < cols; j++)
-        {
-            product*=arr[j][i];
-        }
-        
-    }
-    // soltuion
+    
      
     for (int i = 0; i < rows; ++i) delete[] arr[i];
     delete[] arr;

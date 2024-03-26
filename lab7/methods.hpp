@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 void swap(int *a, int *b)
 {
     int temp = *a;
@@ -10,22 +11,21 @@ void dynamic_selection_sort(int **arr, int checker, int rows) {
     int start = 0;
     int end = rows - 1;
     int step = 1;
-    if ((checker + 1) % 2 != 0) {
+    if ((checker + 1) % 2 != 0) 
+    {
         start = rows - 1;
         end = 0;
         step = -1;
     }
 
-    for (int i = start; i != end; i += step) {
+    for (int i = start; i != end; i += step) 
+    {
         int smallestIndex = i;
-        for (int j = i + step; j >= 0 && j < rows; j += step) {
-            if (arr[j][checker] > arr[smallestIndex][checker]) {
-                smallestIndex = j;
-            }
+        for (int j = i + step; j >= 0 && j < rows; j += step) 
+        {
+            if (arr[j][checker] > arr[smallestIndex][checker]) smallestIndex = j;
         }
-        if (smallestIndex != i) {
-            swap(&arr[smallestIndex][checker], &arr[i][checker]);
-        }
+        if (smallestIndex != i) swap(&arr[smallestIndex][checker], &arr[i][checker]);
     }
 }
 
@@ -72,3 +72,6 @@ int getMaxValue(int **arr, int rows, int counter)
     
     return index;
 }
+
+
+
